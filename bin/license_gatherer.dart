@@ -13,7 +13,7 @@ void main(List<String> args) async {
     ..addOption(
       'pubspec',
       abbr: 'i',
-      help: 'Path to to pubspec.yaml to extract licenses from (mandatory)',
+      help: 'Path to pubspec.yaml to extract licenses from (mandatory)',
     )
     ..addOption(
       'notices',
@@ -27,7 +27,7 @@ void main(List<String> args) async {
       abbr: 'f',
       defaultsTo: true,
       help:
-          'Wether to dynamically determine flutter version if in dependencies',
+          'Whether to dynamically determine flutter version if in dependencies',
     )
     ..addFlag(
       'help',
@@ -68,7 +68,7 @@ void main(List<String> args) async {
 
   //* Mandatory options
   if (!parsedArgs.wasParsed('pubspec')) {
-    printError('Option pubspec is mandatory.');
+    printError('Option pubspec is mandatory');
     exit(1);
   }
 
