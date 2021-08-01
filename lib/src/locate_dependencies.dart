@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 
-import 'located_dependency.dart';
+import 'storage/located_dependency.dart';
 
 /// Locate all dependencies of a 'pubspec.yaml' (Name, Version, Path)
 List<LocatedDependency> locateDependencies(String pubSpecFilePath) {

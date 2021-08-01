@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 
-import 'located_dependency.dart';
+import 'storage/located_dependency.dart';
 
 /// Gather all licenses of provided packages
 ///
