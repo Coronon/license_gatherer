@@ -5,6 +5,7 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 
 import 'storage/located_dependency.dart';
+import 'colourful_print.dart';
 
 /// Locate all dependencies of a 'pubspec.yaml' (Name, Version, Path)
 ///
@@ -46,6 +47,11 @@ List<LocatedDependency> locateDependencies(
         throw StateError("Package '$name' not in package_config.json");
       }
       String? version = _getVersionFromPath(path);
+
+      // Warn about missing version
+      if (version == null && name != 'flutter') {
+        printWarning("Could not determine version of package '$name'");
+      }
 
       // Determine dependency type
       if (dependency is HostedDependency) {
