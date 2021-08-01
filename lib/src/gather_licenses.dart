@@ -1,18 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:license_gatherer/src/storage/gathered_license.dart';
 import 'package:path/path.dart' as p;
 
+import 'storage/license.dart';
 import 'storage/located_dependency.dart';
 
 /// Gather all licenses of provided packages
 ///
 /// This will inspect the locations of packages and try to find the corresponding license.
 /// The result will be a Map <Name, License text>.
-Future<Map<String, String>> gatherLicenses(
+Future<Map<String, GatheredLicense>> gatherLicenses(
         List<LocatedDependency> packages) async =>
     Map.fromEntries(await Future.wait(
-      packages.map<Future<MapEntry<String, String>>>(
+      packages.map<Future<MapEntry<String, GatheredLicense>>>(
         (LocatedDependency package) async {
           // Iterate over all files in the root of the package to find license file
           final dir = Directory(package.path);
@@ -33,14 +35,20 @@ Future<Map<String, String>> gatherLicenses(
             );
           }
 
-          return MapEntry(package.name, await candidates[0].readAsString());
+          return MapEntry(
+            package.name,
+            GatheredLicense.fromLocatedDependency(
+              package,
+              License(await candidates[0].readAsString()),
+            ),
+          );
         },
       ),
     ));
 
 /// Get all potential license files in given directory
 ///
-/// This is implemented a bit more complex to allow parralel processing
+/// This is implemented a bit more complex to allow parallel processing
 /// (not blocking for io so often).
 Future<List<File>> _getCandidates(Directory dir) async {
   final List<File> candidates = [];
