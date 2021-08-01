@@ -37,21 +37,29 @@ List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
       if (path == null) {
         throw StateError("Package '$name' not in package_config.json");
       }
+      final String? version = _getVersionFromPath(path);
 
       // Determine dependency type
       if (dependency is HostedDependency) {
-        return LocatedDependency(name, dependency.version.toString(), path);
+        return LocatedDependency(name, version, path);
       } else if (dependency is PathDependency) {
-        return LocatedDependency(name, null, dependency.path);
+        return LocatedDependency(name, version, dependency.path);
       } else if (dependency is GitDependency) {
-        return LocatedDependency(name, null, path);
+        return LocatedDependency(name, version, path);
       } else if (dependency is SdkDependency) {
-        return LocatedDependency(name, dependency.version.toString(), path);
+        return LocatedDependency(name, version, path);
       }
 
       throw ArgumentError("Package '$name' has invalid type");
     },
   ).toList();
+}
+
+/// Try to determine package version from path
+///
+/// Attempts to read from end of package path e.g. '.../some_package-1.2.3'
+String? _getVersionFromPath(String path) {
+  return RegExp(r'^[^-]*-(.*)$').firstMatch(p.basename(path))?.group(1);
 }
 
 /// Parse 'package_config.json' to a Map of <Name, Path>
