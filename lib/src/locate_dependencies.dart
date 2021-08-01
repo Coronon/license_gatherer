@@ -33,14 +33,13 @@ List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
     (MapEntry<String, Dependency> entry) {
       final name = entry.key;
       final dependency = entry.value;
+      final String? path = packages[name];
+      if (path == null) {
+        throw StateError("Package '$name' not in package_config.json");
+      }
 
       // Determine dependency type
       if (dependency is HostedDependency) {
-        final String? path = packages[name];
-        if (path == null) {
-          throw StateError("Package '$name' not in package_config.json");
-        }
-
         return LocatedDependency(name, dependency.version.toString(), path);
       } else if (dependency is PathDependency) {
         return LocatedDependency(name, null, dependency.path);
