@@ -44,12 +44,12 @@ List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
       } else if (dependency is PathDependency) {
         return LocatedDependency(name, null, dependency.path);
       } else if (dependency is GitDependency) {
-        throw UnimplementedError(
-          "GitDependencies are currently not supported: '$name'",
-        );
+        return LocatedDependency(name, null, path);
+      } else if (dependency is SdkDependency) {
+        return LocatedDependency(name, dependency.version.toString(), path);
       }
 
-      return LocatedDependency('name', 'version', 'path');
+      throw ArgumentError("Package '$name' has invalid type");
     },
   ).toList();
 }
