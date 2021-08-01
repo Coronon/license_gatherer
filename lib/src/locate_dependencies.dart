@@ -7,7 +7,15 @@ import 'package:path/path.dart' as p;
 import 'storage/located_dependency.dart';
 
 /// Locate all dependencies of a 'pubspec.yaml' (Name, Version, Path)
-List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
+///
+/// If flutter is in the list of dependencies the version is assumed
+/// to be the currently installed. Please ensure flutter is installed
+/// and available in PATH. To disable this behavior and replace the
+/// version name with 'any' set [checkFlutterVersion] to false.
+List<LocatedDependency> locateDependencies(
+  String pubSpecFilePath, [
+  bool checkFlutterVersion = true,
+]) {
   //* Check file exists and convert to PubSpec
   final pubSpecFile = File(pubSpecFilePath);
   if (!pubSpecFile.existsSync()) {
@@ -37,7 +45,7 @@ List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
       if (path == null) {
         throw StateError("Package '$name' not in package_config.json");
       }
-      final String? version = _getVersionFromPath(path);
+      String? version = _getVersionFromPath(path);
 
       // Determine dependency type
       if (dependency is HostedDependency) {
@@ -47,6 +55,25 @@ List<LocatedDependency> locateDependencies(String pubSpecFilePath) {
       } else if (dependency is GitDependency) {
         return LocatedDependency(name, version, path);
       } else if (dependency is SdkDependency) {
+        if (name == 'flutter' && checkFlutterVersion) {
+          final flutterVProc = Process.runSync(
+            'flutter',
+            ['--version'],
+            runInShell: true,
+            stdoutEncoding: Encoding.getByName('UTF-8'),
+          );
+
+          if (flutterVProc.exitCode == 0) {
+            version = RegExp(r'^Flutter ([^•]*) •')
+                .firstMatch(flutterVProc.stdout)
+                ?.group(1);
+          } else {
+            throw StateError(
+              'Could not determine flutter version, because it is not available in PATH',
+            );
+          }
+        }
+
         return LocatedDependency(name, version, path);
       }
 
