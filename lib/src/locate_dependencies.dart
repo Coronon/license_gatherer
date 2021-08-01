@@ -67,7 +67,9 @@ _Packages _parsePackages(File packagesFile) {
     (json['packages'] as List).map(
       (package) => MapEntry(
         package['name'] as String,
-        (package['rootUri'] as String).replaceFirst('file://', ''),
+        (package['rootUri'] as String)
+            .replaceFirst('file:///', '')
+            .replaceFirst('file://', ''),
       ),
     ),
   );
