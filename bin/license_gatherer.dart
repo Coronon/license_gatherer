@@ -4,7 +4,7 @@ import 'package:args/args.dart';
 
 import 'package:license_gatherer/license_gatherer.dart';
 
-const String versionStr = 'license_gatherer v1.0.0 - Copyright Rubin Raithel';
+const String versionStr = 'license_gatherer v1.0.1 - Copyright Rubin Raithel';
 
 void main(List<String> args) async {
   //* Parse arguments
