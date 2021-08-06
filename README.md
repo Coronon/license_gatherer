@@ -33,7 +33,7 @@ dart pub global run license_gatherer
 
 ```console
 $ license_gatherer -h
-license_gatherer v1.0.1 - Copyright Rubin Raithel
+license_gatherer v1.0.2 - Copyright Rubin Raithel
 -i, --pubspec                 Path to pubspec.yaml to extract licenses from (mandatory)
 -o, --notices                 Path to file that notices are saved to
                               (defaults to "NOTICES")
