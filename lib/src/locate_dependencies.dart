@@ -108,9 +108,11 @@ _Packages _parsePackages(File packagesFile) {
     (json['packages'] as List).map(
       (package) => MapEntry(
         package['name'] as String,
-        (package['rootUri'] as String)
-            .replaceFirst('file:///', '')
-            .replaceFirst('file://', ''),
+        Platform.isWindows
+            // Windows absolute path can not start with leading '/'
+            ? (package['rootUri'] as String).replaceFirst('file:///', '')
+            // Linux absolute path has to start with leading '/'
+            : (package['rootUri'] as String).replaceFirst('file://', ''),
       ),
     ),
   );
