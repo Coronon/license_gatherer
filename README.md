@@ -1,3 +1,5 @@
+# license_gatherer
+
 Collect all licenses of your dependencies into a single formatted file.
 
 license_gatherer reads your `pubspec.yaml` to gather licenses for all your dependencies (Hosted, Git, Path and SDK supported).
