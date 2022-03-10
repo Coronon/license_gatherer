@@ -19,11 +19,12 @@ String generateNotices(
         .replaceAll('{{LICENSE}}', license.license.text);
   }
 
-  if (format.trim) {
-    return (format.header + licensesTexts + format.footer).trim();
-  }
+  String notices = format.header + licensesTexts + format.footer;
 
-  return format.header + licensesTexts + format.footer;
+  if (format.trim) notices = notices.trim();
+  if (format.trailingNewline) notices = notices + '\n';
+
+  return notices;
 }
 
 /// Format for notices generation by [generateNotices].
@@ -46,8 +47,14 @@ class NoticesFormat {
   /// What to use as version if not available
   final String nullVersion;
 
-  /// Trim whitespace and newlines from front end back
+  /// Trim whitespace and newlines from front and back
   final bool trim;
+
+  /// Add a trailing newline (`\n`) to the end of the file
+  ///
+  /// Combine this option with [trim] to achieve a single
+  /// empty line at the end.
+  final bool trailingNewline;
 
   const NoticesFormat(
     this.header,
@@ -56,6 +63,7 @@ class NoticesFormat {
     this.footer,
     this.nullVersion,
     this.trim,
+    this.trailingNewline,
   );
 }
 
@@ -65,5 +73,6 @@ const defaultNoticesFormat = NoticesFormat(
   '-----------------------------------------------------------------------------\n\n',
   '',
   '?',
+  true,
   true,
 );
