@@ -38,16 +38,16 @@ dart pub global run license_gatherer
 ```console
 $ license_gatherer -h
 license_gatherer v1.1.0 - Copyright Rubin Raithel
--i, --pubspec                 Path to pubspec.yaml to extract licenses from (mandatory)
--o, --notices                 Path to file that notices are saved to
+-i, --pubspec=<path>          Path to pubspec.yaml to extract licenses from (mandatory)
+-o, --notices=<path>          Path to file that notices are saved to
                               (defaults to "NOTICES")
 
-=== Miscellaneous
+=== Format
 -j, --formatfile=<path>       File that contains JSON representation of format to use (see README)
                               (defaults to "")
 
 === Miscellaneous
--f, --[no-]flutter-version    Whether to dynamically determine flutter version if in dependencies
+-f, --[no-]flutter-version    Whether to dynamically determine flutter version if in dependencies 
                               (defaults to on)
 -p, --pedantic                Fail at the slightest sign of trouble (warning)
 -c, --color                   Colorize output (CLI)

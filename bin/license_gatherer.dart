@@ -16,12 +16,14 @@ void main(List<String> args) async {
       'pubspec',
       abbr: 'i',
       help: 'Path to pubspec.yaml to extract licenses from (mandatory)',
+      valueHelp: 'path',
     )
     ..addOption(
       'notices',
       abbr: 'o',
       defaultsTo: 'NOTICES',
       help: 'Path to file that notices are saved to',
+      valueHelp: 'path',
     )
     ..addSeparator('=== Format')
     ..addOption(
