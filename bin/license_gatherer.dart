@@ -5,7 +5,7 @@ import 'package:args/args.dart';
 
 import 'package:license_gatherer/license_gatherer.dart';
 
-const String versionStr = 'license_gatherer v1.0.2 - Copyright Rubin Raithel';
+const String versionStr = 'license_gatherer v1.1.0 - Copyright Rubin Raithel';
 
 void main(List<String> args) async {
   //* Parse arguments
@@ -119,7 +119,7 @@ void main(List<String> args) async {
 
   //* Actual notices generation
   logger.info('Generating notices...');
-  
+
   try {
     await File(parsedArgs['notices']).writeAsString(
       generateNotices(
