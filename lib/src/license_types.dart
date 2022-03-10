@@ -1,3 +1,4 @@
+// This is a hint to the implementor of license compatibility checking
 class LicenseType {
   final String name = '';
   final RegExp regExp = RegExp('');

@@ -6,6 +6,8 @@ class License {
   final String text;
 
   /// Determined type of license
+  /// 
+  /// **Currently unsupported!**
   LicenseType? type;
 
   License(this.text);
