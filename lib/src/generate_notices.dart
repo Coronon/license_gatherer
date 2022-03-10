@@ -19,9 +19,10 @@ String generateNotices(
         .replaceAll('{{LICENSE}}', license.license.text ?? format.nullText);
   }
 
+  if (format.trim) licensesTexts = licensesTexts.trim();
+
   String notices = format.header + licensesTexts + format.footer;
 
-  if (format.trim) notices = notices.trim();
   if (format.trailingNewline) notices = notices + '\n';
 
   return notices;
@@ -51,6 +52,9 @@ class NoticesFormat {
   final String nullText;
 
   /// Trim whitespace and newlines from front and back
+  ///
+  /// For better control, trim is applied before the header
+  /// and footer are added (-> only applies to main body).
   final bool trim;
 
   /// Add a trailing newline (`\n`) to the end of the file

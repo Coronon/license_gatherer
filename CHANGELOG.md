@@ -3,6 +3,7 @@
 - Add unified logging
 - Add control switch for CLI colorization
 - Add pedantic mode
+- Fix main body trim (trim before adding header and footer)
 - Add trailing newline to license format
 - Add placeholder for empty license text to format
 
