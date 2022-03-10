@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:logging/logging.dart';
@@ -21,6 +22,15 @@ void main(List<String> args) async {
       abbr: 'o',
       defaultsTo: 'NOTICES',
       help: 'Path to file that notices are saved to',
+    )
+    ..addSeparator('=== Format')
+    ..addOption(
+      'formatfile',
+      abbr: 'j',
+      defaultsTo: '',
+      help:
+          'File that contains JSON representation of format to use (see README)',
+      valueHelp: 'path',
     )
     ..addSeparator('=== Miscellaneous')
     ..addFlag(
@@ -117,6 +127,22 @@ void main(List<String> args) async {
     }
   });
 
+  //* Parse optional format
+  final String formatFile = parsedArgs['formatfile'];
+  NoticesFormat? customFormat;
+  if (formatFile != '') {
+    logger.info("Using custom format from '$formatFile'");
+    try {
+      customFormat = NoticesFormat.fromJson(
+        jsonDecode(
+          await File(parsedArgs['formatfile']).readAsString(),
+        ),
+      );
+    } catch (e) {
+      logger.shout('Invalid format file');
+    }
+  } else {}
+
   //* Actual notices generation
   logger.info('Generating notices...');
 
@@ -129,6 +155,7 @@ void main(List<String> args) async {
             parsedArgs['flutter-version'],
           ),
         ),
+        customFormat ?? defaultNoticesFormat,
       ),
     );
   } catch (e) {

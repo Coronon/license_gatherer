@@ -1,5 +1,6 @@
 ## 1.1.0
 
+- Add ability to specify custom format
 - Add unified logging
 - Add control switch for CLI colorization
 - Add pedantic mode

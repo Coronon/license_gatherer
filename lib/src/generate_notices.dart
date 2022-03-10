@@ -73,6 +73,16 @@ class NoticesFormat {
     this.trim,
     this.trailingNewline,
   );
+
+  NoticesFormat.fromJson(Map<String, dynamic> json)
+      : header = json['header'],
+        license = json['license'],
+        licenseSeparator = json['licenseSeparator'],
+        footer = json['footer'],
+        nullVersion = json['nullVersion'],
+        nullText = json['nullText'],
+        trim = json['trim'],
+        trailingNewline = json['trailingNewline'];
 }
 
 const defaultNoticesFormat = NoticesFormat(
