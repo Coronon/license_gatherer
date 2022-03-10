@@ -4,6 +4,7 @@
 - Add control switch for CLI colorization
 - Add pedantic mode
 - Add trailing newline to license format
+- Add placeholder for empty license text to format
 
 ## 1.0.2
 

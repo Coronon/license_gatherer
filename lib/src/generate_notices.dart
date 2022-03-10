@@ -16,7 +16,7 @@ String generateNotices(
     licensesTexts += format.license
         .replaceAll('{{NAME}}', license.name)
         .replaceAll('{{VERSION}}', license.version ?? format.nullVersion)
-        .replaceAll('{{LICENSE}}', license.license.text);
+        .replaceAll('{{LICENSE}}', license.license.text ?? format.nullText);
   }
 
   String notices = format.header + licensesTexts + format.footer;
@@ -47,6 +47,9 @@ class NoticesFormat {
   /// What to use as version if not available
   final String nullVersion;
 
+  /// What to use as license text if not available
+  final String nullText;
+
   /// Trim whitespace and newlines from front and back
   final bool trim;
 
@@ -62,6 +65,7 @@ class NoticesFormat {
     this.licenseSeparator,
     this.footer,
     this.nullVersion,
+    this.nullText,
     this.trim,
     this.trailingNewline,
   );
@@ -72,6 +76,7 @@ const defaultNoticesFormat = NoticesFormat(
   '{{NAME}} ({{VERSION}}):\n\n{{LICENSE}}\n\n',
   '-----------------------------------------------------------------------------\n\n',
   '',
+  '?',
   '?',
   true,
   true,
