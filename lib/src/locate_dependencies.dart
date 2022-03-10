@@ -5,7 +5,7 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 
 import 'storage/located_dependency.dart';
-import 'colourful_print.dart';
+import 'logger.dart';
 
 /// Locate all dependencies of a 'pubspec.yaml' (Name, Version, Path)
 ///
@@ -44,13 +44,14 @@ List<LocatedDependency> locateDependencies(
       final dependency = entry.value;
       final String? path = packages[name];
       if (path == null) {
-        throw StateError("Package '$name' not in package_config.json");
+        logger.severe("Package '$name' not in package_config.json");
+        return LocatedDependency(name, null, '');
       }
       String? version = _getVersionFromPath(path);
 
       // Warn about missing version
       if (version == null && name != 'flutter') {
-        printWarning("Could not determine version of package '$name'");
+        logger.warning("Could not determine version of package '$name'");
       }
 
       // Determine dependency type
@@ -74,7 +75,7 @@ List<LocatedDependency> locateDependencies(
                 .firstMatch(flutterVProc.stdout)
                 ?.group(1);
           } else {
-            throw StateError(
+            logger.warning(
               'Could not determine flutter version, because it is not available in PATH',
             );
           }
@@ -83,7 +84,8 @@ List<LocatedDependency> locateDependencies(
         return LocatedDependency(name, version, path);
       }
 
-      throw ArgumentError("Package '$name' has invalid type");
+      logger.severe("Package '$name' has invalid type - please file an issue");
+      return LocatedDependency(name, null, '');
     },
   ).toList();
 }
