@@ -41,6 +41,8 @@ license_gatherer v1.0.2 - Copyright Rubin Raithel
 === Miscellaneous
 -f, --[no-]flutter-version    Whether to dynamically determine flutter version if in dependencies
                               (defaults to on)
+-p, --pedantic                Fail at the slightest sign of trouble (warning)
+-c, --color                   Colorize output (CLI)
 -h, --help                    Display this usage description
 -v, --version                 Display current version
 ```
